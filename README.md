@@ -1,6 +1,6 @@
 # 🎭 Playwright + TypeScript Enterprise Test Automation Framework
 
-[![Playwright Tests CI](https://github.com/YOUR_GITHUB_USERNAME/playwright-typescript-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/playwright-typescript-portfolio/actions)
+[![Playwright Tests CI](https://github.com/ariehutajulu/playwright-typescript/actions/workflows/playwright.yml/badge.svg)](https://github.com/ariehutajulu/playwright-typescript/actions)
 ![Playwright Version](https://img.shields.io/badge/playwright-v1.49+-2EAD33?logo=playwright&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-v5.0+-3178C6?logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/node.js-%3E%3D18-339933?logo=node.js&logoColor=white)
@@ -115,7 +115,7 @@ flowchart TD
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_GITHUB_USERNAME/playwright-typescript-portfolio.git
+git clone https://github.com/ariehutajulu/playwright-typescript.git
 cd playwright-typescript-portfolio
 
 # Install dependencies
