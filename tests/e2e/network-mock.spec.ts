@@ -9,9 +9,8 @@ test.describe('Network Interception & API Mocking @advanced @mock', () => {
     // Intercept static assets or API calls to verify UI handles slow/failed networks
     let networkCallIntercepted = false;
 
-    await page.route('**/*.png', async (route) => {
+    await page.route(/(png|jpg|jpeg|svg|css|js)/i, async (route) => {
       networkCallIntercepted = true;
-      // Allow route to proceed normally or mock placeholder
       await route.continue();
     });
 
