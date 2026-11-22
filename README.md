@@ -177,13 +177,6 @@ This repository includes a production-ready GitHub Actions workflow (`.github/wo
 
 ---
 
-## 💼 CV / Interview Talking Points
-
-When presenting this project to recruiters, hiring managers, or in technical interviews, highlight:
-1. **Design Philosophy**: *"I built this framework using Page Object Model and Custom Fixtures to ensure high maintainability, avoid test flakiness, and eliminate repetitive setup code."*
-2. **Beyond Standard E2E**: *"In addition to UI testing, I incorporated API contract validation, network route mocking, WCAG accessibility scans with Axe, and visual regression testing."*
-3. **CI/CD Integration**: *"The framework runs on GitHub Actions with caching strategies and artifact uploads, ensuring continuous automated feedback on every pull request."*
-4. **Resilience**: *"I relied strictly on user-facing semantic locators (`getByRole`, `data-test`) and Playwright's auto-waiting assertions rather than arbitrary sleep timeouts."*
 
 ---
 
