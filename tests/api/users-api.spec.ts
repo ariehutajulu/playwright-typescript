@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { ApiClient } from '../../src/api/ApiClient';
 import { TestDataGenerator } from '../../src/utils/testDataGenerator';
 
-test.describe('REST API Test Suite (JSONPlaceholder) @api', () => {
+test.describe('REST API Test Suite @api', () => {
   let apiClient: ApiClient;
 
   test.beforeEach(async ({ request }) => {
@@ -13,14 +13,14 @@ test.describe('REST API Test Suite (JSONPlaceholder) @api', () => {
     const response = await apiClient.getUsers();
     expect(response.status()).toBe(200);
 
-    const users = await response.json();
+    const body = await response.json();
+    // Accommodate both flat arrays (JSONPlaceholder) and paginated data arrays (ReqRes)
+    const users = Array.isArray(body) ? body : body.data;
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBeGreaterThan(0);
 
     const firstUser = users[0];
     expect(firstUser).toHaveProperty('id');
-    expect(firstUser).toHaveProperty('name');
-    expect(firstUser).toHaveProperty('username');
     expect(firstUser).toHaveProperty('email');
   });
 
@@ -29,7 +29,9 @@ test.describe('REST API Test Suite (JSONPlaceholder) @api', () => {
     const response = await apiClient.getUserById(targetId);
     expect(response.status()).toBe(200);
 
-    const user = await response.json();
+    const body = await response.json();
+    // Accommodate both direct object (JSONPlaceholder) and wrapped data object (ReqRes)
+    const user = body.data ? body.data : body;
     expect(user.id).toBe(targetId);
     expect(user.email).toContain('@');
   });
@@ -59,8 +61,9 @@ test.describe('REST API Test Suite (JSONPlaceholder) @api', () => {
     expect(body.name).toBe(updatedData.name);
   });
 
-  test('API06 - DELETE /users/:id removes user with 200 OK', async () => {
+  test('API06 - DELETE /users/:id removes user with success status', async () => {
     const response = await apiClient.deleteUser(2);
-    expect(response.status()).toBe(200);
+    // Standard REST permits 200 (JSONPlaceholder) or 204 No Content (ReqRes)
+    expect([200, 204]).toContain(response.status());
   });
 });

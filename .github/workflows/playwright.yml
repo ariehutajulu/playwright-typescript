@@ -31,7 +31,7 @@ jobs:
       env:
         CI: true
         BASE_URL: https://www.saucedemo.com
-        API_BASE_URL: https://reqres.in/api
+        API_BASE_URL: https://jsonplaceholder.typicode.com
 
     - name: Upload Test Results Artifacts
       if: always()
