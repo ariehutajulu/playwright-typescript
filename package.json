@@ -1,0 +1,42 @@
+{
+  "name": "playwright-typescript-portfolio",
+  "version": "1.0.0",
+  "description": "Production-grade E2E and API test automation framework built with Playwright and TypeScript for SDET portfolio showcasing Page Object Model, Custom Fixtures, Accessibility, and CI/CD.",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:api": "playwright test tests/api",
+    "test:a11y": "playwright test tests/a11y",
+    "test:visual": "playwright test tests/visual",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://www.saucedemo.com",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "sdet",
+    "test-automation",
+    "page-object-model",
+    "e2e-testing",
+    "api-testing",
+    "accessibility",
+    "axe-core",
+    "github-actions"
+  ],
+  "author": "QA Automation Engineer",
+  "license": "MIT",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@faker-js/faker": "^10.6.0",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.10",
+    "typescript": "^7.0.2"
+  }
+}
