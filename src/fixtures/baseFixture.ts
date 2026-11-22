@@ -4,6 +4,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import { TodoPage } from '../pages/TodoPage';
 import { envConfig } from '../utils/envConfig';
 
 /**
@@ -15,6 +16,7 @@ type CustomFixtures = {
   inventoryPage: InventoryPage;
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
+  todoPage: TodoPage;
   authedInventoryPage: InventoryPage;
   makeAxeBuilder: () => AxeBuilder;
 };
@@ -34,6 +36,10 @@ export const test = baseTest.extend<CustomFixtures>({
 
   checkoutPage: async ({ page }, use) => {
     await use(new CheckoutPage(page));
+  },
+
+  todoPage: async ({ page }, use) => {
+    await use(new TodoPage(page));
   },
 
   /**
