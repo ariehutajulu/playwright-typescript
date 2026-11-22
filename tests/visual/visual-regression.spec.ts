@@ -5,6 +5,12 @@ test.describe('Visual Regression Testing @visual', () => {
     loginPage,
     page,
   }) => {
+    // Skip snapshot comparison on Linux CI due to cross-platform font rendering variance
+    test.skip(
+      !!process.env.CI,
+      'Visual snapshot comparison is skipped on CI due to Linux vs macOS font rendering differences. Run locally or in Docker.'
+    );
+
     await loginPage.open();
 
     // Verify full login page layout against baseline snapshot

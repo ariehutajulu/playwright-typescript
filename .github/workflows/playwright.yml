@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 30
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -23,23 +23,15 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Get installed Playwright version
-      id: playwright-version
-      run: echo "version=$(node -e "console.log(require('@playwright/test/package.json').version)")" >> $GITHUB_OUTPUT
+    - name: Install Playwright Chromium & System Dependencies
+      run: npx playwright install --with-deps chromium
 
-    - name: Cache Playwright Browser Binaries
-      id: playwright-cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-
-    - name: Install Playwright Browsers
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx playwright install --with-deps
-
-    - name: Run Playwright Tests (Smoke & Regression)
-      run: npm test
+    - name: Run Playwright Tests (Smoke, Regression, Buttons, API & A11y)
+      run: npm run test:ci
+      env:
+        CI: true
+        BASE_URL: https://www.saucedemo.com
+        API_BASE_URL: https://reqres.in/api
 
     - name: Upload Test Results Artifacts
       if: always()
@@ -48,15 +40,3 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 14
-
-  # Optional job to publish test report to GitHub Pages
-  # deploy-report:
-  #   needs: test
-  #   if: always() && github.ref == 'refs/heads/main'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pages: write
-  #     id-token: write
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       uses: actions/deploy-pages@v4

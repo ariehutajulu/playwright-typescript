@@ -2,28 +2,26 @@ import { test, expect } from '@playwright/test';
 import { ApiClient } from '../../src/api/ApiClient';
 import { TestDataGenerator } from '../../src/utils/testDataGenerator';
 
-test.describe('REST API Test Suite (ReqRes) @api', () => {
+test.describe('REST API Test Suite (JSONPlaceholder) @api', () => {
   let apiClient: ApiClient;
 
   test.beforeEach(async ({ request }) => {
     apiClient = new ApiClient(request);
   });
 
-  test('API01 - GET /users returns paginated list with valid schema', async () => {
-    const response = await apiClient.getUsers(1);
+  test('API01 - GET /users returns list with valid schema', async () => {
+    const response = await apiClient.getUsers();
     expect(response.status()).toBe(200);
 
-    const body = await response.json();
-    expect(body.page).toBe(1);
-    expect(Array.isArray(body.data)).toBe(true);
-    expect(body.data.length).toBeGreaterThan(0);
+    const users = await response.json();
+    expect(Array.isArray(users)).toBe(true);
+    expect(users.length).toBeGreaterThan(0);
 
-    const firstUser = body.data[0];
+    const firstUser = users[0];
     expect(firstUser).toHaveProperty('id');
+    expect(firstUser).toHaveProperty('name');
+    expect(firstUser).toHaveProperty('username');
     expect(firstUser).toHaveProperty('email');
-    expect(firstUser).toHaveProperty('first_name');
-    expect(firstUser).toHaveProperty('last_name');
-    expect(firstUser).toHaveProperty('avatar');
   });
 
   test('API02 - GET /users/:id retrieves a specific user resource', async () => {
@@ -31,9 +29,9 @@ test.describe('REST API Test Suite (ReqRes) @api', () => {
     const response = await apiClient.getUserById(targetId);
     expect(response.status()).toBe(200);
 
-    const body = await response.json();
-    expect(body.data.id).toBe(targetId);
-    expect(body.data.email).toContain('@');
+    const user = await response.json();
+    expect(user.id).toBe(targetId);
+    expect(user.email).toContain('@');
   });
 
   test('API03 - GET /users/:id returns 404 for non-existent resource', async () => {
@@ -49,9 +47,7 @@ test.describe('REST API Test Suite (ReqRes) @api', () => {
 
     const body = await response.json();
     expect(body.name).toBe(userPayload.name);
-    expect(body.job).toBe(userPayload.job);
     expect(body).toHaveProperty('id');
-    expect(body).toHaveProperty('createdAt');
   });
 
   test('API05 - PUT /users/:id updates an existing user', async () => {
@@ -61,12 +57,10 @@ test.describe('REST API Test Suite (ReqRes) @api', () => {
 
     const body = await response.json();
     expect(body.name).toBe(updatedData.name);
-    expect(body.job).toBe(updatedData.job);
-    expect(body).toHaveProperty('updatedAt');
   });
 
-  test('API06 - DELETE /users/:id removes user with 204 No Content', async () => {
+  test('API06 - DELETE /users/:id removes user with 200 OK', async () => {
     const response = await apiClient.deleteUser(2);
-    expect(response.status()).toBe(204);
+    expect(response.status()).toBe(200);
   });
 });

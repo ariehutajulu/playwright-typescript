@@ -5,7 +5,7 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 export const envConfig = {
   baseUrl: process.env.BASE_URL || 'https://www.saucedemo.com',
-  apiBaseUrl: process.env.API_BASE_URL || 'https://reqres.in/api',
+  apiBaseUrl: process.env.API_BASE_URL || 'https://jsonplaceholder.typicode.com',
   users: {
     standard: process.env.STANDARD_USER || 'standard_user',
     locked: process.env.LOCKED_USER || 'locked_out_user',
